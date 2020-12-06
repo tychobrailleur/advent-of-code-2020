@@ -12,7 +12,6 @@
 
 
 (defn parse-seats [path state]
-
   (if (empty? path) {:index (state :index)
                      :range (state :range)
                      :seat (max (state :seat) (+ (* 8 (first (state :range)))
@@ -39,8 +38,10 @@
                                                         :range [min-row max-row]
                                                         :seat (state :seat)
                                                         :seat-range (upper-range (state :seat-range))})))))
-;; CF. https://stackoverflow.com/a/23200627/289466
-(defn diff [s1 s2]
+;; Cf. https://stackoverflow.com/a/23200627/289466
+(defn diff
+  "Diffs two lists."
+  [s1 s2]
   (mapcat
     (fn [[x n]] (repeat n x))
     (apply merge-with - (map frequencies [s1 s2]))))
@@ -61,4 +62,6 @@
         min-seat (reduce min (sort all-seats))
         max-seat (reduce max (sort all-seats))]
     (println (reduce max all-seats))
+    ;; find the missing seat by diff'ing the list of possible seats
+    ;; with the actual ones we found.
     (println (diff (range min-seat (inc max-seat)) all-seats))))

@@ -60,10 +60,10 @@
 
 (defn validate-file [file validate-fn]
   (->> file
-      read-passports
-      (map parse-passport)
-      (filter #(apply validate-fn (list %)))
-      count))
+       read-passports
+       (map parse-passport)
+       (filter #(apply validate-fn (list %)))
+       count))
 
 (defn -main [& args]
   (println (validate-file "resources/input4.txt" valid-passport?))
