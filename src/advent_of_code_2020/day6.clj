@@ -6,19 +6,18 @@
   (let [content (slurp file)]
     (str/split content #"\n\n")))
 
-(defn count-forms [forms]
+(defn basic-count-forms [forms method]
   (let [lines (str/split forms #"\n")]
     (->> lines
          (map #(into #{} (str/split % #"")))
-         (reduce set/union #{})
+         (reduce method)
          count)))
 
+(defn count-forms [forms]
+  (basic-count-forms forms set/union))
+
 (defn count-intersect [forms]
-  (let [lines (str/split forms #"\n")]
-    (->> lines
-         (map #(into #{} (str/split % #"")))
-         (reduce set/intersection)
-         count)))
+  (basic-count-forms forms set/intersection))
 
 (defn count-all-forms [file count-fn]
   (let [forms (load-forms file)]
