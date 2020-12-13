@@ -1,5 +1,6 @@
 (ns advent-of-code-2020.day5
-  (:require [clojure.pprint :as pp]))
+  (:require [clojure.pprint :as pp]
+            [advent-of-code-2020.util :as util]))
 
 (defn upper-range [range]
   (let [width (- (second range) (first range))]
@@ -38,13 +39,6 @@
                                                         :range [min-row max-row]
                                                         :seat (state :seat)
                                                         :seat-range (upper-range (state :seat-range))})))))
-;; Cf. https://stackoverflow.com/a/23200627/289466
-(defn diff
-  "Diffs two lists."
-  [s1 s2]
-  (mapcat
-    (fn [[x n]] (repeat n x))
-    (apply merge-with - (map frequencies [s1 s2]))))
 
 (defn load-seats [file]
   (with-open [rdr (clojure.java.io/reader file)]
@@ -64,4 +58,4 @@
     (println (reduce max all-seats))
     ;; find the missing seat by diff'ing the list of possible seats
     ;; with the actual ones we found.
-    (println (diff (range min-seat (inc max-seat)) all-seats))))
+    (println (util/diff (range min-seat (inc max-seat)) all-seats))))

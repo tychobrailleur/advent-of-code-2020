@@ -1,8 +1,7 @@
 (ns advent-of-code-2020.day2
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [advent-of-code-2020.util :as util]))
 
-(defn string->char [str]
-  (first (char-array str)))
 
 (defn char-at-index [str char index]
   (if (= char (nth str (- index 1))) 1 0))
@@ -20,7 +19,7 @@
         [_ num1 num2 letter] (re-matches #"([0-9]+)-([0-9]+) ([a-z])" policy)]
     (apply policy-fn (list (Integer/parseInt num1)
                            (Integer/parseInt num2)
-                           (string->char letter)
+                           (util/string->char letter)
                            pass))))
 
 (defn parse-line [line]
