@@ -30,3 +30,7 @@
   If the string is more than one char long, it converts the first character."
   [str]
   (first (char-array str)))
+
+(defn replace-char-at [s pos char]
+  (let [sb (StringBuilder. s)]
+    (str (.replace sb pos (inc pos) char))))
